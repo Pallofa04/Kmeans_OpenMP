@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#SBATCH --job-name=kmeansOpMP 
+#SBATCH -N 1 # number of nodes
+#SBATCH -n 2 # number of total cores/processes
+#SBATCH --partition=nodo.q
+#SBATCH --exclusive # claim node in exclusive mode
+
+
+# Compile C program: 
+gcc kmeans.c kmeanslib.c -fopenmp -Ofast -o kmeans_OpenMP.exe
+
+export OMP_NUM_THREADS=2
+
+
+# Ejecucion:
+perf stat ./kmeans_OpenMP.exe test 2 imagen.bmp
+#perf stat ./kmeans_OpenMP.exe test 4 imagen.bmp
+#perf stat ./kmeans_OpenMP.exe test 8 imagen.bmp
+#perf stat ./kmeans_OpenMP.exe test 16 imagen.bmp
+#perf stat ./kmeans_OpenMP.exe test 32 imagen.bmp
+#perf stat ./kmeans_OpenMP.exe test 64 imagen.bmp
+

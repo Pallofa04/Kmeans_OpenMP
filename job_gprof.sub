@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#SBATCH --job-name=kmeansOpMP 
+#SBATCH -N 1 # number of nodes
+#SBATCH -n 2 # number of total cores/processes
+#SBATCH --partition=nodo.q
+#SBATCH --exclusive # claim node in exclusive mode
+
+#Usar Gprof (-pg) al compilar, es una herramienta de perfilado, permite analizar las areas que requieren optimizacion
+#Compilar y ejecutar:
+
+gcc -pg kmeans.c kmeanslib.c -o kmeansgprof
+
+./kmeansgprof test 2 imagen.bmp
+
+#Generar informe de perfilado:
+
+gprof kmeansgprof > informe_gprof.txt
+
+#Borra el fichero ejecutable
+rm kmeansgprof
+
+
