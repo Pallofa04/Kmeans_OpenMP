@@ -158,6 +158,40 @@ uint32_t getChecksum(cluster* centroids, uint8_t k){
 }
 
 /*
+ * Return the index number of the closest centroid to a given pixel (p)
+ * input @param: p                              --> pixel pointer
+ * input @param: centroids              --> cluster array pointer
+ * input @param: num_clusters   --> amount of centroids in @param: centroids
+ *
+ * output: uint8_t --> Index of the closest centroid
+ *
+ */
+
+
+uint8_t find_closest_centroid(rgb* p, cluster* centroids, uint8_t num_clusters){
+        uint32_t min = UINT32_MAX;
+        uint32_t dis[num_clusters];
+        uint8_t closest = 0, j;
+        int16_t diffR, diffG, diffB;
+
+        for(j = 0; j < num_clusters; j++)
+        {
+                diffR = centroids[j].r - p->r;
+                diffG = centroids[j].g - p->g;
+                diffB = centroids[j].b - p->b;
+                // No sqrt required.
+                dis[j] = diffR*diffR + diffG*diffG + diffB*diffB;
+
+                if(dis[j] < min)
+                {
+                        min = dis[j];
+                        closest = j;
+                }
+        }
+        return closest;
+}
+
+/*
  * Main function k-means
  * input @param: K                      --> number of clusters
  * input @param: centroides --> the centroids
@@ -267,7 +301,7 @@ void kmeans(uint8_t k, cluster* centroides, uint32_t num_pixels, rgb* pixels){
                         centroides[j].media_r = centroides[j].media_r/centroides[j].num_puntos;
                         centroides[j].media_g = centroides[j].media_g/centroides[j].num_puntos;
                         centroides[j].media_b = centroides[j].media_b/centroides[j].num_puntos;
-                        changed = centroides[j].media_r != centroides[j].r || centroides[j].media_g != centroides[j].g || centroides[j].media_b != centroides[j];
+                        changed = centroides[j].media_r != centroides[j].r || centroides[j].media_g != centroides[j].g || centroides[j].media_b != centroides[j].b;
                         condition = condition || changed;
                         centroides[j].r = centroides[j].media_r;
                         centroides[j].g = centroides[j].media_g;
