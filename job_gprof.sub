@@ -3,7 +3,7 @@
 #SBATCH --job-name=kmeansOpMP 
 #SBATCH -N 1 # number of nodes
 #SBATCH -n 2 # number of total cores/processes
-#SBATCH --partition=nodo.q
+#SBATCH --partition=aolin.q
 #SBATCH --exclusive # claim node in exclusive mode
 
 #Usar Gprof (-pg) al compilar, es una herramienta de perfilado, permite analizar las areas que requieren optimizacion
