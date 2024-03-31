@@ -239,6 +239,7 @@ void kmeans(uint8_t k, cluster* centroides, uint32_t num_pixels, rgb* pixels){
 
 
                 // Find closest cluster for each pixel
+		#pragma omp parallel for
                 for(j = 0; j < num_pixels; j++)
         {
                         // Es dur a terme les inicialitzacions funció find_closest_centroid

@@ -8,7 +8,7 @@
 
 
 # Compile C program: 
-gcc kmeans.c kmeanslib_mod.c -fopenmp -Ofast -o kmeans_OpenMP.exe
+gcc kmeans.c kmeanslib_openMP.c -fopenmp -Ofast -o kmeans_OpenMP.exe
 
 export OMP_NUM_THREADS=2
 
